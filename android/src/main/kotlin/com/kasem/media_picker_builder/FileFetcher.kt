@@ -33,7 +33,10 @@ class FileFetcher {
                 MediaStore.Video.Media.BUCKET_DISPLAY_NAME,
                 MediaStore.Video.Media.BUCKET_ID,
                 MediaStore.Video.Media.MIME_TYPE,
-                MediaStore.Video.Media.DURATION)
+                MediaStore.Video.Media.DURATION,
+                MediaStore.Video.Media.HEIGHT,
+                MediaStore.Video.Media.WIDTH
+                )
 
         fun getAlbums(context: Context, withImages: Boolean, withVideos: Boolean): JSONArray {
             val albumHashMap: MutableMap<Long, Album> = LinkedHashMap()
@@ -162,6 +165,12 @@ class FileFetcher {
                     val albumId = cursor.getLong(4)         //MediaStore.Video.Media.BUCKET_ID
                     val mimeType = cursor.getString(5)      //MediaStore.Video.Media.MIME_TYPE
                     val duration = cursor.getLong(6)        //MediaStore.Video.Media.DURATION
+                    var height =-1;
+                    if(cursor.getColumnIndex("height")!=-1)
+                        height=cursor.getInt(cursor.getColumnIndex("height"));    //MediaStore.Video.Media.HEIGHT
+                    var width = -1;
+                    if(cursor.getColumnIndex("width")!=-1)
+                        width=cursor.getInt(cursor.getColumnIndex("width"));   //MediaStore.Video.Media.WIDTH
 
                     return MediaFile(
                             fileId,
@@ -173,7 +182,9 @@ class FileFetcher {
                             0,
                             mimeType,
                             duration,
-                            type
+                            type,
+                            height,
+                            width
                     )
                 }
                 MediaFile.MediaType.IMAGE -> {
@@ -184,6 +195,12 @@ class FileFetcher {
                     val albumId = cursor.getLong(4)         //MediaStore.Images.Media.BUCKET_ID
                     val orientation = cursor.getInt(5)      //MediaStore.Images.Media.ORIENTATION
                     val mimeType = cursor.getString(6)      //MediaStore.Images.Media.MIME_TYPE
+                    var height=-1
+                    if(cursor.getColumnIndex("height")!=-1)
+                       height=cursor.getInt(cursor.getColumnIndex("height"));
+                    var width =-1
+                    if(cursor.getColumnIndex("width")!=-1)
+                       width=cursor.getInt(cursor.getColumnIndex("width"));
 
                     return MediaFile(
                             fileId,
@@ -195,7 +212,9 @@ class FileFetcher {
                             orientation,
                             mimeType,
                             null,
-                            type
+                            type,
+                            height,
+                            width
                     )
                 }
             }

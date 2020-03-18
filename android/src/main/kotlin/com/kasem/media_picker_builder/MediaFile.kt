@@ -20,7 +20,9 @@ class MediaFile(
          * Video duration in milliseconds
          */
         var duration: Long?,
-        var type: MediaType) {
+        var type: MediaType,
+        var height: Int,
+        var width: Int) {
 
     fun toJSONObject(): JSONObject {
         return JSONObject()
@@ -32,6 +34,8 @@ class MediaFile(
                 .put("mimeType", mimeType)
                 .put("duration", duration)
                 .put("type", type.ordinal)
+                .put("height", height)
+                .put("width", width)
     }
 
     override fun equals(other: Any?): Boolean {

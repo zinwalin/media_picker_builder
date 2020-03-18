@@ -24,6 +24,9 @@ class MediaFile {
   /// Orientation in degrees (i.e. 0, 90, 180, 270)
   int orientation;
 
+  int height;
+  int width;
+
   /// Video duration in milliseconds
   int duration;
 
@@ -47,7 +50,9 @@ class MediaFile {
         orientation = json['orientation'],
         duration = json['duration'],
         mimeType = json['mimeType'],
-        type = MediaType.values[json['type']];
+        type = MediaType.values[json['type']],
+        width=json['width'],
+        height=json['height'];
 
   @override
   bool operator ==(Object other) =>
