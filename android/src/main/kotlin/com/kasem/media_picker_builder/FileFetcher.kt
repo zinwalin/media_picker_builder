@@ -13,6 +13,7 @@ import org.json.JSONArray
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
+import android.graphics.BitmapFactory;
 
 
 class FileFetcher {
@@ -170,8 +171,7 @@ class FileFetcher {
                         height=cursor.getInt(cursor.getColumnIndex("height"));    //MediaStore.Video.Media.HEIGHT
                     var width = -1;
                     if(cursor.getColumnIndex("width")!=-1)
-                        width=cursor.getInt(cursor.getColumnIndex("width"));   //MediaStore.Video.Media.WIDTH
-
+                        width=cursor.getInt(cursor.getColumnIndex("width"));        //MediaStore.Video.Media.WIDTH
                     return MediaFile(
                             fileId,
                             albumId,
@@ -201,7 +201,13 @@ class FileFetcher {
                     var width =-1
                     if(cursor.getColumnIndex("width")!=-1)
                        width=cursor.getInt(cursor.getColumnIndex("width"));
-
+                    if(height==-1||width==-1) {
+                        val options = BitmapFactory.Options()
+                        options.inJustDecodeBounds = true
+                        BitmapFactory.decodeFile(filePath, options)
+                        width = options.outWidth
+                        height = options.outHeight
+                    }
                     return MediaFile(
                             fileId,
                             albumId,
