@@ -131,7 +131,9 @@ class FileFetcher {
                 orientation: orientation,
                 duration: nil,
                 mimeType: nil,
-                type: .IMAGE)
+                type: .IMAGE,
+                height: asset.pixelHeight,
+                width: asset.pixelWidth)
             
         } else if (asset.mediaType == .video) {
             
@@ -170,7 +172,9 @@ class FileFetcher {
                 orientation: 0,
                 duration: duration,
                 mimeType: nil,
-                type: .VIDEO)
+                type: .VIDEO,
+                height: asset.pixelHeight,
+                width: asset.pixelWidth)
             
         }
         return mediaFile

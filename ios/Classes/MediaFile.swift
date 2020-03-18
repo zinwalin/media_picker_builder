@@ -16,8 +16,10 @@ struct MediaFile : Codable {
     var duration: Double?
     var mimeType: String?
     var type: MediaType
+    var height: Int?
+    var width: Int?
     
-    init(id: String, dateAdded: Int?, path: String?, thumbnailPath: String?, orientation: Int, duration: Double?, mimeType: String?, type: MediaType) {
+    init(id: String, dateAdded: Int?, path: String?, thumbnailPath: String?, orientation: Int, duration: Double?, mimeType: String?, type: MediaType, height: Int, width: Int) {
         self.id = id
         self.dateAdded = dateAdded
         self.path = path
@@ -26,6 +28,8 @@ struct MediaFile : Codable {
         self.duration = duration
         self.mimeType = mimeType
         self.type = type
+        self.height = height
+        self.width = width
     }
 }
 
