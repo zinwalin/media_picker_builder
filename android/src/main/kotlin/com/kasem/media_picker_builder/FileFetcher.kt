@@ -14,7 +14,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
 import android.graphics.BitmapFactory;
-
+import android.media.MediaMetadataRetriever;
 
 class FileFetcher {
     companion object {
@@ -172,6 +172,19 @@ class FileFetcher {
                     var width = -1;
                     if(cursor.getColumnIndex("width")!=-1)
                         width=cursor.getInt(cursor.getColumnIndex("width"));        //MediaStore.Video.Media.WIDTH
+                    if(width<=0){
+                        try {
+                            val mmr = MediaMetadataRetriever();
+                            mmr.setDataSource(filePath);
+                            width = Integer.parseInt(mmr.extractMetadata
+                            (MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
+                            height = Integer.parseInt(mmr.extractMetadata
+                            (MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
+                            mmr.release();
+                        } catch (e:Exception) {
+                            e.printStackTrace();
+                        }
+                    }
                     return MediaFile(
                             fileId,
                             albumId,
