@@ -167,11 +167,11 @@ class FileFetcher {
                     val mimeType = cursor.getString(5)      //MediaStore.Video.Media.MIME_TYPE
                     val duration = cursor.getLong(6)        //MediaStore.Video.Media.DURATION
                     var height =-1;
-                    if(cursor.getColumnIndex("height")!=-1)
-                        height=cursor.getInt(cursor.getColumnIndex("height"));    //MediaStore.Video.Media.HEIGHT
+//                    if(cursor.getColumnIndex("height")!=-1)
+//                        height=cursor.getInt(cursor.getColumnIndex("height"));    //MediaStore.Video.Media.HEIGHT
                     var width = -1;
-                    if(cursor.getColumnIndex("width")!=-1)
-                        width=cursor.getInt(cursor.getColumnIndex("width"));        //MediaStore.Video.Media.WIDTH
+//                    if(cursor.getColumnIndex("width")!=-1)
+//                        width=cursor.getInt(cursor.getColumnIndex("width"));        //MediaStore.Video.Media.WIDTH
                     if(width<=0){
                         try {
                             val mmr = MediaMetadataRetriever();
@@ -180,6 +180,14 @@ class FileFetcher {
                             (MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
                             height = Integer.parseInt(mmr.extractMetadata
                             (MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
+                            var rotation=Integer.parseInt(mmr.extractMetadata
+                            (MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION))
+                            if(rotation==90){
+                                height=Integer.parseInt(mmr.extractMetadata
+                                (MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
+                                width=Integer.parseInt(mmr.extractMetadata
+                                (MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
+                            }
                             mmr.release();
                         } catch (e:Exception) {
                             e.printStackTrace();
